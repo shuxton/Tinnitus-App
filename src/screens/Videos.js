@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{useEffect,useState} from 'react';
 import youtube from '../api/youtube';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View,ScrollView,SafeAreaView } from 'react-native';
 import VideoList from '../components/video/VideoList';
 
 export default function Videos({navigation}) {
@@ -23,7 +23,8 @@ setSelectedVideo(video)
       params: {
         part: "snippet",
         maxResults: 5,
-        key: "Add your key",
+        key:"",
+
         q: "soothing music"
       }
     }).then(response=>{
@@ -42,16 +43,32 @@ setSelectedVideo(video)
   }
  
   //const { selectedVideo, videos } = this.state;
+  if(videos.length>0)
   return (
+    <SafeAreaView style={styles.container}>
+    <ScrollView>
     <View style={styles.container}>
     <VideoList videos={videos} onVideoSelect={onVideoSelect} navigation={navigation}/> 
       <StatusBar style="auto" />
     </View>
+    </ScrollView>
+    </SafeAreaView>
+  );
+  else
+  return(
+<SafeAreaView style={styles.container}>
+    
+    <View style={styles.container}>
+    <Text style={{textAlign:'center'}}>Check you internet and try again</Text>
+    </View>
+   
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+   // marginTop: Constants.statusBarHeight,
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Videos from '../screens/Videos'
-import VideoPlayer from '../screens/VideoPlayer'
+import MusicPlayer from '../screens/MusicPlayer'
 
 
 const Stack = createStackNavigator();
@@ -10,8 +9,7 @@ const MyStack = () => {
   return (
     
       <Stack.Navigator>
-        <Stack.Screen name="Videos" component={Videos} />
-        <Stack.Screen name="Video Therapy" component={VideoPlayer} />
+        <Stack.Screen name="Music Therapy" component={MusicPlayer} />
 
       </Stack.Navigator>
    

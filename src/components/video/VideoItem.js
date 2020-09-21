@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 export default function VideoList({video,onVideoSelect,navigation}){
     return(
         <TouchableOpacity
-        onPress={()=>navigation.navigate("VideoPlayer",{videoId:video.id.videoId,title:video.snippet.title})}
+        onPress={()=>navigation.navigate("Video Therapy",{videoId:video.id.videoId,title:video.snippet.title})}
         >
         <View style={{flexDirection:"row",margin:10,marginBottom:0}}>
         <Image 

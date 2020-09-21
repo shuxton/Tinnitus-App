@@ -1,18 +1,43 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import Stack from './src/navigators/stack-navigator'
+import Bottom from './src/navigators/bottom-navigator'
+import Welcome from './src/navigators/welcome-stack-navigator'
+import { useAsyncStorage } from '@react-native-community/async-storage';
 import { StyleSheet, Text, View } from 'react-native';
-import VideoPlayer from './src/screens/VideoPlayer'
-import Videos from './src/screens/Videos'
+
 
 
 export default function App() {
+  const [value, setValue] = useState('false');
+  const { getItem, setItem } = useAsyncStorage('@storage_key');
 
+  const readItemFromStorage = async () => {
+    const item = await getItem();
+    setValue(item);
+    if(item==null){
+     async () => {
+        await setItem('true');
+      };
+    }
+  };
+  useEffect(() => {
+    readItemFromStorage();
+  }, []);
 
+  if(value=='true')
   return (
-    <Stack></Stack>
+    <NavigationContainer >
+       <Bottom>   
+    </Bottom>
+    </NavigationContainer>
+   
+  );
+  else return(
+    <NavigationContainer >
+    <Welcome>   
+ </Welcome>
+ </NavigationContainer>
   );
 }
 
