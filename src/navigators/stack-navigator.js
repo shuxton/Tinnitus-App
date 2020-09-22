@@ -10,7 +10,7 @@ const MyStack = () => {
   return (
     
       <Stack.Navigator>
-        <Stack.Screen name="Videos" component={Videos} />
+        <Stack.Screen options={{headerShown: false}} name="Videos" component={Videos} />
         <Stack.Screen name="Video Therapy" component={VideoPlayer} />
 
       </Stack.Navigator>

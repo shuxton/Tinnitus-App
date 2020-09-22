@@ -8,8 +8,8 @@ const Stack = createStackNavigator();
 const MyStack = () => {
   return (
     
-      <Stack.Navigator>
-        <Stack.Screen name="Music Therapy" component={MusicPlayer} />
+      <Stack.Navigator >
+        <Stack.Screen options={{headerShown: false}} name="Music Therapy" component={MusicPlayer} />
 
       </Stack.Navigator>
    

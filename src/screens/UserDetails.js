@@ -10,15 +10,21 @@ import {
   Keyboard,
   TouchableOpacity,
   ScrollView,
+  Picker
 } from 'react-native';
+import * as pref from "../storage/pref"
 
-export default function UserDetails(){
-    let [userName, setUserName] = useState('');
-    let [userAge, setUserAge] = useState('');
-    let [errortext, setErrortext] = useState('');
-    const [value, onChangeText] = React.useState('Useless Placeholder');
+export default function UserDetails({navigation}){
+    const [userName, setUserName] = useState('');
+    const [userAge, setUserAge] = useState('');
+    const [userGender, setUserGender] = useState("0");
+    // const { getName, setName } = useAsyncStorage('username');
+    // const { getAge, setAge } = useAsyncStorage('age');
+    // const { getGender, setGender } = useAsyncStorage('gender');
+
+   
+
     const handleSubmitPress = () => {
-        setErrortext('');
         if (!userName) {
           alert('Please fill Name');
           return;
@@ -27,6 +33,16 @@ export default function UserDetails(){
           alert('Please fill Age');
           return;
         }
+        if(userGender=="0"){
+          alert('Please select a userGender');
+          return
+        }
+      pref.setData('username',userName);
+      pref.setData('age',userAge);
+      pref.setData('gender',userGender);
+
+            navigation.navigate("Contacts");
+        
         
     }
     return(
@@ -34,8 +50,6 @@ export default function UserDetails(){
         <ScrollView keyboardShouldPersistTaps="handled">
           <View style={{ marginTop: 100 }}>
             <KeyboardAvoidingView enabled>
-              <View style={{ alignItems: 'center' }}>
-              </View>
               <View style={styles.SectionStyle}>
                 <TextInput
                   style={styles.inputStyle}
@@ -44,12 +58,8 @@ export default function UserDetails(){
                   placeholder="Enter Name" //dummy@abc.com
                   placeholderTextColor="#F6F6F7"
                   autoCapitalize="none"
-                  keyboardType="email-address"
-                
+                 // keyboardType="normal"
                   returnKeyType="next"
-                //   onSubmitEditing={() =>
-                //     this._Ageinput && this._Ageinput.focus()
-                //   }
                   blurOnSubmit={false}
                 />
               </View>
@@ -61,29 +71,31 @@ export default function UserDetails(){
                   placeholder="Enter Age" //12345
                   placeholderTextColor="#F6F6F7"
                   keyboardType="numeric"
-                //   ref={ref => {
-                //     this._Ageinput = ref;
-                //   }}
                   onSubmitEditing={Keyboard.dismiss}
                   blurOnSubmit={false}
-                 // secureTextEntry={true}
                 />
               </View>
-              {errortext != '' ? (
-                <Text style={styles.errorTextStyle}> {errortext} </Text>
-              ) : null}
+              <View style={styles.SectionStyle}>
+
+              <Picker style={styles.picker}
+        userGender={userGender}
+        itemStyle={{fontSize: 20, height: 95}}
+          onValueChange={(itemValue, itemIndex) => setUserGender(itemValue)}
+      >
+                <Picker.Item label="Gender" value="0" />
+        <Picker.Item label="Male" value="M" />
+        <Picker.Item label="Female" value="F" />
+        <Picker.Item label="Other" value="O" />
+      </Picker>
+      </View>
+
               <TouchableOpacity
                 style={styles.buttonStyle}
                 activeOpacity={0.5}
                 onPress={handleSubmitPress}>
-                <Text style={styles.buttonTextStyle}>LOGIN</Text>
+                <Text style={styles.buttonTextStyle}>Next</Text>
               </TouchableOpacity>
-              <Text
-                style={styles.registerTextStyle}
-              //  onPress={() => props.navigation.navigate('RegisterScreen')}
-              >
-                New Here ? Register
-              </Text>
+            
             </KeyboardAvoidingView>
           </View>
         </ScrollView>
@@ -95,17 +107,29 @@ const styles = StyleSheet.create({
     mainBody: {
       flex: 1,
       justifyContent: 'center',
-      backgroundColor: '#307ecc',
+      backgroundColor: '#79a4d9',
+      alignItems: 'center',
+
     },
     SectionStyle: {
       flexDirection: 'row',
+      justifyContent: 'center',
       height: 40,
       marginTop: 20,
       marginLeft: 35,
       marginRight: 35,
       margin: 10,
     },
+    picker: {
+      width: 130, 
+      marginRight: 50,
+      marginLeft:50,
+      color:'white',
+    },
     buttonStyle: {
+     // width:210,
+       flexDirection: 'row',
+      justifyContent: 'center',
       backgroundColor: '#7DE24E',
       borderWidth: 0,
       color: '#FFFFFF',
@@ -124,7 +148,8 @@ const styles = StyleSheet.create({
       fontSize: 16,
     },
     inputStyle: {
-      flex: 1,
+     // flex: 1,
+     width:250,
       color: 'white',
       paddingLeft: 15,
       paddingRight: 15,
@@ -132,15 +157,5 @@ const styles = StyleSheet.create({
       borderRadius: 30,
       borderColor: 'white',
     },
-    registerTextStyle: {
-      color: '#FFFFFF',
-      textAlign: 'center',
-      fontWeight: 'bold',
-      fontSize: 14,
-    },
-    errorTextStyle: {
-      color: 'red',
-      textAlign: 'center',
-      fontSize: 14,
-    },
+   
   });

@@ -47,7 +47,7 @@ setSelectedVideo(video)
   return (
     <SafeAreaView style={styles.container}>
     <ScrollView>
-    <View style={styles.container}>
+    <View style={styles.container} style={{marginTop:30}}>
     <VideoList videos={videos} onVideoSelect={onVideoSelect} navigation={navigation}/> 
       <StatusBar style="auto" />
     </View>
