@@ -1,181 +1,169 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react';
 import { StyleSheet, TouchableOpacity, View, Image, Text } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { Audio } from 'expo-av'
 
 const audioBookPlaylist = [
 	{
-		title: 'Hamlet - Act I',
-		author: 'William Shakespeare',
-		source: 'Librivox',
+		title: "You aren't alone. We are in this together",
 		uri:
-			'https://ia800204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act1_shakespeare.mp3',
-		imageSource: 'http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg'
+			require('../../assets/white.mp3'),
+		imageSource:Image.resolveAssetSource(require('../../assets/sound.png')).uri
 	},
 	{
-		title: 'Hamlet - Act II',
-		author: 'William Shakespeare',
-		source: 'Librivox',
+		title: 'Music therapy is the best!',
 		uri:
-			'https://ia600204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act2_shakespeare.mp3',
-		imageSource: 'http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg'
+			require('../../assets/pink.mp3'),
+		imageSource: Image.resolveAssetSource(require('../../assets/sound.png')).uri
 	},
 	{
-		title: 'Hamlet - Act III',
-		author: 'William Shakespeare',
-		source: 'Librivox',
-		uri: 'http://www.archive.org/download/hamlet_0911_librivox/hamlet_act3_shakespeare.mp3',
-		imageSource: 'http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg'
+		title: 'Close your eyes and take deep breaths',
+		uri: require('../../assets/ocean.mp3'),
+		imageSource: Image.resolveAssetSource(require('../../assets/sound.png')).uri
 	},
 	{
-		title: 'Hamlet - Act IV',
-		author: 'William Shakespeare',
-		source: 'Librivox',
+		title: 'Remeber your best memories',
 		uri:
-			'https://ia800204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act4_shakespeare.mp3',
-		imageSource: 'http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg'
+			require('../../assets/rain.mp3'),
+		imageSource: Image.resolveAssetSource(require('../../assets/sound.png')).uri
 	},
-	{
-		title: 'Hamlet - Act V',
-		author: 'William Shakespeare',
-		source: 'Librivox',
-		uri:
-			'https://ia600204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act5_shakespeare.mp3',
-		imageSource: 'http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg'
-	}
 ]
 
-export default class App extends React.Component {
-	state = {
-		isPlaying: false,
-		playbackInstance: null,
-		currentIndex: 0,
-		volume: 1.0,
-		isBuffering: true
-	}
+export default function music() {
 
-	async componentDidMount() {
+	const[isPlaying,setIsPlaying]=useState(false)
+	const[playbackInstance,setPlaybackInstance]=useState(null)
+	const[currentIndex,setCurrentIndex]=useState(0)
+	const[volume,setVolume]=useState(1.0)
+	const[isBuffering,setIsBuffering]=useState(true)
+	// state = {
+	// 	isPlaying: false,
+	// 	playbackInstance: null,
+	// 	currentIndex: 0,
+	// 	volume: 1.0,
+	// 	isBuffering: true
+	// }
+
+useEffect(()=>{
+	Audio.setAudioModeAsync({
+		allowsRecordingIOS: false,
+		interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+		playsInSilentModeIOS: true,
+		interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+		shouldDuckAndroid: true,
+		staysActiveInBackground: true,
+		playThroughEarpieceAndroid: true
+	})
+	loadAudio()
+},[])
+
+
+
+	async function loadAudio() {
+		//const { currentIndex, isPlaying, volume } = this.state
+
 		try {
-			await Audio.setAudioModeAsync({
-				allowsRecordingIOS: false,
-				interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-				playsInSilentModeIOS: true,
-				interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-				shouldDuckAndroid: true,
-				staysActiveInBackground: true,
-				playThroughEarpieceAndroid: true
-			})
-
-			this.loadAudio()
-		} catch (e) {
-			console.log(e)
-		}
-	}
-
-	async loadAudio() {
-		const { currentIndex, isPlaying, volume } = this.state
-
-		try {
-			const playbackInstance = new Audio.Sound()
-			const source = {
-				uri: audioBookPlaylist[currentIndex].uri
-			}
+			const PlaybackInstance = new Audio.Sound()
+			const source = 
+				 audioBookPlaylist[currentIndex].uri
+			
 
 			const status = {
 				shouldPlay: isPlaying,
 				volume: volume
 			}
 
-			playbackInstance.setOnPlaybackStatusUpdate(this.onPlaybackStatusUpdate)
-			await playbackInstance.loadAsync(source, status, false)
-			this.setState({
-				playbackInstance
-			})
+			PlaybackInstance.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate)
+			await PlaybackInstance.loadAsync(source, status, false)
+				setPlaybackInstance(PlaybackInstance)
+			playbackInstance.setIsLoopingAsync(true)
 		} catch (e) {
 			console.log(e)
 		}
 	}
 
-	onPlaybackStatusUpdate = status => {
-		this.setState({
-			isBuffering: status.isBuffering
-		})
+	const onPlaybackStatusUpdate = status => {
+		setIsBuffering(status.isBuffering)
 	}
 
-	handlePlayPause = async () => {
-		const { isPlaying, playbackInstance } = this.state
-		isPlaying ? await playbackInstance.pauseAsync() : await playbackInstance.playAsync()
+	const handlePlayPause = async () => {
+		if(isPlaying){
+			await playbackInstance.pauseAsync().then(res=>{
+				setIsPlaying(!isPlaying)
+			})
+		}
+		else{
+			await playbackInstance.playAsync().then(res=>{
+				setIsPlaying(!isPlaying)
+			})
+		}
+		
 
-		this.setState({
-			isPlaying: !isPlaying
-		})
 	}
 
-	handlePreviousTrack = async () => {
-		let { playbackInstance, currentIndex } = this.state
+ const	handlePreviousTrack = async () => {
 		if (playbackInstance) {
-			await playbackInstance.unloadAsync()
-			this.setState({
-				currentIndex : (currentIndex === 0 ? audioBookPlaylist.length -1 : currentIndex-1)
-			});
-			this.loadAudio()
+			console.log("yo")
+			await playbackInstance.unloadAsync().then(res=>{
+				setCurrentIndex((currentIndex === 0 ? audioBookPlaylist.length -1 : currentIndex-1))
+				console.log("1")
+			})
+			console.log("2")
+			loadAudio()
+			
 		}
 	}
 
-	handleNextTrack = async () => {
-		let { playbackInstance, currentIndex } = this.state
+const	handleNextTrack = async () => {
+		
 		if (playbackInstance) {
-			await playbackInstance.unloadAsync()
-			this.setState({
-				currentIndex: (currentIndex+1 > audioBookPlaylist.length - 1 ? 0 : currentIndex+1)
-			});
-			this.loadAudio()
+			await playbackInstance.unloadAsync().then(res=>{
+				setCurrentIndex((currentIndex+1 > audioBookPlaylist.length - 1 ? 0 : currentIndex+1))
+			})
+			loadAudio()
+
+			
+			
 		}
 	}
 
-	renderFileInfo() {
-		const { playbackInstance, currentIndex } = this.state
-		return playbackInstance ? (
-			<View style={styles.trackInfo}>
-				<Text style={[styles.trackInfoText, styles.largeText]}>
-					{audioBookPlaylist[currentIndex].title}
-				</Text>
-				<Text style={[styles.trackInfoText, styles.smallText]}>
-					{audioBookPlaylist[currentIndex].author}
-				</Text>
-				<Text style={[styles.trackInfoText, styles.smallText]}>
-					{audioBookPlaylist[currentIndex].source}
-				</Text>
-			</View>
-		) : null
-	}
 
-	render() {
+	
 		return (
 			<View style={styles.container}>
 				<Image
 					style={styles.albumCover}
-					source={{ uri: 'http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg' }}
+					source={ {uri:audioBookPlaylist[currentIndex].imageSource}}
 				/>
 				<View style={styles.controls}>
-					<TouchableOpacity style={styles.control} onPress={this.handlePreviousTrack}>
+					<TouchableOpacity style={styles.control} onPress={handlePreviousTrack}>
 						<Ionicons name='ios-skip-backward' size={48} color='#444' />
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.control} onPress={this.handlePlayPause}>
-						{this.state.isPlaying ? (
+					<TouchableOpacity style={styles.control} onPress={handlePlayPause}>
+						{isPlaying ? (
 							<Ionicons name='ios-pause' size={48} color='#444' />
 						) : (
 							<Ionicons name='ios-play-circle' size={48} color='#444' />
 						)}
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.control} onPress={this.handleNextTrack}>
+					<TouchableOpacity style={styles.control} onPress={handleNextTrack}>
 						<Ionicons name='ios-skip-forward' size={48} color='#444' />
 					</TouchableOpacity>
 				</View>
-				{this.renderFileInfo()}
+				{playbackInstance ? (
+			<View style={styles.trackInfo}>
+				<Text style={[styles.trackInfoText, styles.largeText]}>
+					{audioBookPlaylist[currentIndex].title}
+				</Text>
+				<Text style={[styles.trackInfoText, styles.smallText]}>
+					(Please use earphones)
+				</Text>
+				
+			</View>
+		) : null}
 			</View>
 		)
-	}
+	
 }
 
 const styles = StyleSheet.create({

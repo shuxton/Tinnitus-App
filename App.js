@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import Bottom from './src/navigators/bottom-navigator'
 import Welcome from './src/navigators/welcome-stack-navigator'
-import Home from './src/screens/Home'
+import { AppLoading } from 'expo';
 import { StyleSheet, Text, View } from 'react-native';
 import * as pref from "./src/storage/pref"
 
@@ -18,10 +18,11 @@ pref.setData('date',new Date().getDate());
 pref.setData('appUsage',0);
     }
   })
-    const item = pref.getData('token').then(res=>{
-      setValue(item);
-      if(item==null){
-        pref.setData('token','true')
+     pref.getData('token').then(res=>{
+      setValue(res);
+     // pref.setData('token','false')
+      if(res==null){
+        
         pref.setData('appUsage',0)
         pref.setData('date',new Date().getDate())
        }
@@ -32,15 +33,23 @@ pref.setData('appUsage',0);
     readItemFromStorage();
   }, []);
 
-  if(value=='true')
+
+
+ 
+if(value=='false'){
+    return(<AppLoading></AppLoading>)
+  }
+  else if(value=='true')
   return (
     <NavigationContainer >
        <Bottom>   
     </Bottom>
     </NavigationContainer>
    
-  );
-  else return(
+  ); 
+ else
+
+  return(
     <NavigationContainer >
     <Welcome>   
  </Welcome>
@@ -56,3 +65,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+

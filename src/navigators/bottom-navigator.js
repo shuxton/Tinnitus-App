@@ -2,10 +2,9 @@ import * as React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../screens/Home';
-import Videos from '../screens/Videos'
 import VideoStack from './stack-navigator'
 import MusicStack from './music-stack-navigator'
-
+import Emergency from '../screens/Emergency'
 
 const Tab = createBottomTabNavigator();
 
@@ -26,6 +25,9 @@ function MyTabs() {
         else if (route.name === 'Videos') {
           iconName = focused ?  'ios-play-circle':'ios-play' ;
         }
+        else if (route.name === 'Emergency') {
+          iconName = focused ?  'ios-add-circle':'ios-add' ;
+        }
         // size=24;
          color="black"
         // You can return any component that you like here!
@@ -35,6 +37,8 @@ function MyTabs() {
       <Tab.Screen  name="Home" component={Home} />
       <Tab.Screen  name="Music" component={MusicStack} />
       <Tab.Screen  name="Videos" component={VideoStack} />
+      <Tab.Screen  name="Emergency" component={Emergency} />
+
     </Tab.Navigator>
   );
 }

@@ -19,6 +19,12 @@
     "ios": {
       "supportsTablet": true
     },
+    "android": {
+      "package": "com.shuxton.tinnitus",
+      "versionCode": 1,
+      "useNextNotificationsApi": true,
+      "enableDangerousExperimentalLeanBuilds": true
+      },
     "web": {
       "favicon": "./assets/favicon.png"
     }
