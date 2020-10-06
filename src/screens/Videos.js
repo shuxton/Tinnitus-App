@@ -6,37 +6,31 @@ import { AppLoading } from 'expo';
 
 const videoData= [
   {
-     "etag": "3lRjoHtB1O74KVGlBpA4_tMFqh0",
      "id":{
        "kind": "youtube#video",
-       "videoId": "KO8Ing0d21A",
+       "videoId": "Cnfj6QCGLyA",
      },
      "snippet":{
-       "channelId": "UCwobzUc3z-0PrFpoRxNszXQ",
-       "channelTitle": "Yellow Brick Cinema - Relaxing Music",
        "thumbnails":{
          "medium":{
            "height": 180,
-           "url": "https://i.ytimg.com/vi/KO8Ing0d21A/mqdefault_live.jpg",
+           "url": "https://img.youtube.com/vi/Cnfj6QCGLyA/0.jpg",
            "width": 320,
          },
        },
-       "title": "Relaxing Music",
+       "title": "Relaxing Piano and Flute Music",
      },
    },
   {
-     "etag": "apiTrI2u-fNVaC6naJiUiyU5GdI",
      "id":{
        "kind": "youtube#video",
-       "videoId": "eDCgksLBU3w",
+       "videoId": "eXbt6B7GloE",
      },
      "snippet":{
-       "channelId": "UCwobzUc3z-0PrFpoRxNszXQ",
-       "channelTitle": "Yellow Brick Cinema - Relaxing Music",
        "thumbnails":{
          "medium":{
            "height": 180,
-           "url": "https://i.ytimg.com/vi/eDCgksLBU3w/mqdefault_live.jpg",
+           "url": "https://img.youtube.com/vi/eXbt6B7GloE/0.jpg",
            "width": 320,
          },
        },
@@ -44,18 +38,15 @@ const videoData= [
      },
    },
   {
-     "etag": "0cdWSu18YbiwPRPzKIODDo10ZuM",
      "id":{
        "kind": "youtube#video",
-       "videoId": "t_QwcZ6LevU",
+       "videoId": "PszSx4HvKAA",
      },
      "snippet":{
-       "channelId": "UCwobzUc3z-0PrFpoRxNszXQ",
-       "channelTitle": "Yellow Brick Cinema - Relaxing Music",
        "thumbnails":{
          "medium":{
            "height": 180,
-           "url": "https://i.ytimg.com/vi/t_QwcZ6LevU/mqdefault_live.jpg",
+           "url": "https://img.youtube.com/vi/PszSx4HvKAA/0.jpg",
            "width": 320,
          },
        },
@@ -63,43 +54,68 @@ const videoData= [
      },
    },
   {
-     "etag": "OD3Lb-QNBe7SnfWmKaMLX5yBkqk",
      "id":{
        "kind": "youtube#video",
-       "videoId": "5qap5aO4i9A",
+       "videoId": "tBGvOmUhhq4",
      },
      "snippet":{
-       "channelId": "UCSJ4gkVC6NrvII8umztf0Ow",
-       "channelTitle": "ChilledCow",
        "thumbnails":{
          "medium":{
            "height": 180,
-           "url": "https://i.ytimg.com/vi/5qap5aO4i9A/mqdefault_live.jpg",
+           "url": "https://img.youtube.com/vi/tBGvOmUhhq4/0.jpg",
            "width": 320,
          },
        },
-       "title": "Chill Pill",
+       "title": "This is not the end. Inspiring speech on mental health",
      },
    },
   {
-     "etag": "-0Rn_9LaBcE0vNDyeMrMqsgGGIk",
      "id":{
        "kind": "youtube#video",
-       "videoId": "CcmXERhrh5g",
+       "videoId": "qv1afUOxfwU",
      },
      "snippet":{
-       "channelId": "UCmQK52xYtdeg7EYiQhqEeZA",
-       "channelTitle": "Body Mind Zone",
        "thumbnails":{
          "medium":{
            "height": 180,
-           "url": "https://i.ytimg.com/vi/CcmXERhrh5g/mqdefault_live.jpg",
+           "url": "https://img.youtube.com/vi/qv1afUOxfwU/0.jpg",
            "width": 320,
          },
        },
-       "title": "Deep Sleep Music",
+       "title": "Get over depression",
      },
    },
+   {
+    "id":{
+      "kind": "youtube#video",
+      "videoId": "Vw1_AEaoXtM",
+    },
+    "snippet":{
+      "thumbnails":{
+        "medium":{
+          "height": 180,
+          "url": "https://img.youtube.com/vi/Vw1_AEaoXtM/0.jpg",
+          "width": 320,
+        },
+      },
+      "title": "You are not alone. Motivational Speech",
+    },
+  }, {
+    "id":{
+      "kind": "youtube#video",
+      "videoId": "nKo4jYDO9FQ",
+    },
+    "snippet":{
+      "thumbnails":{
+        "medium":{
+          "height": 180,
+          "url": "https://img.youtube.com/vi/nKo4jYDO9FQ/0.jpg",
+          "width": 320,
+        },
+      },
+      "title": "Powerful tinnitus sound therapy",
+    },
+  }
  ]
  
 

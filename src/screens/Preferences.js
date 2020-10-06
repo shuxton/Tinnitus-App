@@ -52,12 +52,10 @@ export default function Preferences({navigation}){
   
       notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
         setNotification(notification);
-        console.log("yo")
       });
   
       responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
         console.log(response);
-        console.log("yo")
       });
   
       return () => {

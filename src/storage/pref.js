@@ -3,6 +3,7 @@ import { AsyncStorage, Alert } from "react-native"
 
 
 export const getData = async(item) => {
+   // AsyncStorage.clear()
     try {
         const value = await AsyncStorage.getItem(item);
         return JSON.parse(value);

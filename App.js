@@ -7,7 +7,6 @@ import { AppLoading } from 'expo';
 import { StyleSheet, Text, View } from 'react-native';
 import * as pref from "./src/storage/pref"
 
-
 export default function App() {
   const [value, setValue] = useState('false');
 
@@ -39,15 +38,7 @@ pref.setData('appUsage',0);
 if(value=='false'){
     return(<AppLoading></AppLoading>)
   }
-  else if(value=='true')
-  return (
-    <NavigationContainer >
-       <Bottom>   
-    </Bottom>
-    </NavigationContainer>
-   
-  ); 
- else
+  else if(value==null || value =="")
 
   return(
     <NavigationContainer >
@@ -55,6 +46,15 @@ if(value=='false'){
  </Welcome>
  </NavigationContainer>
   );
+  else 
+  return (
+    <NavigationContainer >
+       <Bottom>   
+    </Bottom>
+    </NavigationContainer>
+   
+  ); 
+
 }
 
 const styles = StyleSheet.create({
