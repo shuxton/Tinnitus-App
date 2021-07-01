@@ -10,6 +10,7 @@ import axios from "axios"
 import { PhoneNumber } from 'libphonenumber-js';
  const screenWidth = Dimensions.get("window").width;
 
+// heyo
 export default function Home(){
   const [username, setUsername] = useState('hello')
   const [age, setAge] = useState(null)
